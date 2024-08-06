@@ -1,20 +1,45 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import "./App.css" ;
+const Login = (props) => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [emailError, setEmailError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
 
-export default function Login() {
+  const navigate = useNavigate()
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [emailError, setEmailError] = useState('')
-    const [passwordError, setPasswordError] = useState('')
+  const onButtonClick = () => {
+    // Set initial error values to empty
+    setEmailError('')
+    setPasswordError('')
   
-    const navigate = useNavigate()
-  
-    const onButtonClick = () => {
-      // You'll update this function later...
+    // Check if the user has entered both fields correctly
+    if ('' === email) {
+      setEmailError('Please enter your email')
+      return
     }
+  
+    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+      setEmailError('Please enter a valid email')
+      return
+    }
+  
+    if ('' === password) {
+      setPasswordError('Please enter a password')
+      return
+    }
+  
+    if (password.length < 7) {
+      setPasswordError('The password must be 8 characters or longer')
+      return
+    }
+  
+    // Authentication calls will be made here...
+  }
+
   return (
-         <div className={'mainContainer'}>
+    <div className={'mainContainer'}>
       <div className={'titleContainer'}>
         <div>Login</div>
       </div>
@@ -45,3 +70,5 @@ export default function Login() {
     </div>
   )
 }
+
+export default Login
